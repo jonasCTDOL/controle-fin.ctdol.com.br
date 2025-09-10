@@ -1,0 +1,10 @@
+/* Estilos básicos */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial;
+}
+
+body {
+  background: #f7f7f7;
+}

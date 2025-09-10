@@ -80,7 +80,7 @@ function Dashboard() {
             <List>
               {incomes.map(i => (
                 <ListItem key={i.id} divider>
-                  <ListItemText primary={`${i.type} — R$ ${i.value}`} secondary={i.date} />
+                  <ListItemText primary={`${i.type} \u2014 R$ ${i.value}`} secondary={i.date} />
                 </ListItem>
               ))}
             </List>
@@ -103,7 +103,7 @@ function Dashboard() {
             <List>
               {expenses.map(e => (
                 <ListItem key={e.id} divider>
-                  <ListItemText primary={`${e.type} — R$ ${e.value}`} secondary={e.date} />
+                  <ListItemText primary={`${e.type} \u2014 R$ ${e.value}`} secondary={e.date} />
                 </ListItem>
               ))}
             </List>

@@ -16,7 +16,7 @@ function LoginPage() {
     try {
       if (isRegistering) {
         await register(email, password);
-        setMessage('Registro bem-sucedido! Faça login agora.');
+        setMessage('Registro bem-sucedido! Fa\u00e7a login agora.');
         setMessageType('success');
         setIsRegistering(false); // Switch to login mode after successful registration
       } else {
@@ -91,7 +91,7 @@ function LoginPage() {
             variant="text"
             onClick={() => setIsRegistering(!isRegistering)}
           >
-            {isRegistering ? 'Já tem uma conta? Faça login' : 'Não tem uma conta? Registre-se'}
+            {isRegistering ? 'J\u00e1 tem uma conta? Fa\u00e7a login' : 'N\u00e3o tem uma conta? Registre-se'}
           </Button>
         </Box>
       </Box>

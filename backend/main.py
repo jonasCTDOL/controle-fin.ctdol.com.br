@@ -4,6 +4,7 @@ from typing import List # Removed Annotated
 import os
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -33,6 +34,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve static frontend build (if exists)
+_dist_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'frontend', 'dist')
+if os.path.isdir(_dist_path):
+    app.mount("/", StaticFiles(directory=_dist_path, html=True), name="frontend")
 
 # OAuth2PasswordBearer para lidar com o esquema de segurança OAuth2
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -70,7 +76,10 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 
 @app.get("/")
 def read_root():
-    """Endpoint raiz para verificar se a API está online."""
+    """Endpoint raiz — se o build do frontend foi gerado, o StaticFiles já serve o index.html; caso contrário retorna status."""
+    if os.path.isdir(_dist_path):
+        # Quando StaticFiles está montado em '/', ele já serve index.html automaticamente.
+        return {"status": "OK", "message": "Frontend está sendo servido pelo static mount."}
     return {"status": "API Online", "message": "Bem-vindo à API de Controle Financeiro!"}
 
 @app.post("/users/register", response_model=schemas.User)
