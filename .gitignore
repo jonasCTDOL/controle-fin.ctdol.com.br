@@ -11,3 +11,9 @@ node_modules/
 # Arquivos de sistema operacional e editores
 .DS_Store
 .vscode/
+# Runtime DB
+finance.db
+# Virtualenv
+backend/venv/
+# Vite build
+frontend/dist/
