@@ -1,4 +1,5 @@
-const API_BASE_URL = window.__API_BASE_URL__ || (process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000');
+// Em produção queremos usar URL relativa (mesma origem) para evitar chamadas ao localhost do cliente
+const API_BASE_URL = window.__API_BASE_URL__ || (process.env.REACT_APP_API_BASE_URL || '');
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('access_token');
