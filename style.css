@@ -1,0 +1,132 @@
+/* Estilos Gerais */
+body {
+    background-color: #0a0a1a;
+    color: #e0e0e0;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Canvas de Fundo */
+#digital-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Container Principal */
+.container {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Logo */
+.logo {
+    width: 150px;
+    margin-bottom: 2rem;
+    animation: subtleGlow 3s infinite alternate ease-in-out;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    animation-play-state: paused; /* Pausa o brilho para destacar o hover */
+}
+
+@keyframes subtleGlow {
+    from {
+        filter: drop-shadow(0 0 5px #00f0ff) drop-shadow(0 0 10px #00f0ff);
+    }
+    to {
+        filter: drop-shadow(0 0 15px #00f0ff) drop-shadow(0 0 25px #00f0ff);
+    }
+}
+
+/* Título com Efeito Glitch */
+.glitch {
+    font-size: 3rem;
+    font-weight: 700;
+    position: relative;
+    text-transform: uppercase;
+    color: #e0e0e0;
+    text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff;
+    animation: glitch-scan 4s infinite linear alternate;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0a0a1a;
+    overflow: hidden;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #d900ff;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00f0ff, 2px 2px #d900ff;
+    animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(15% 0 80% 0); }
+    20% { clip-path: inset(90% 0 5% 0); }
+    40% { clip-path: inset(45% 0 45% 0); }
+    60% { clip-path: inset(10% 0 85% 0); }
+    80% { clip-path: inset(95% 0 2% 0); }
+    100% { clip-path: inset(70% 0 20% 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(80% 0 10% 0); }
+    20% { clip-path: inset(5% 0 90% 0); }
+    40% { clip-path: inset(50% 0 30% 0); }
+    60% { clip-path: inset(90% 0 5% 0); }
+    80% { clip-path: inset(2% 0 95% 0); }
+    100% { clip-path: inset(60% 0 30% 0); }
+}
+
+@keyframes glitch-scan {
+    0%, 100% { clip-path: inset(0 0 98% 0); }
+    20% { clip-path: inset(20% 0 78% 0); }
+    40% { clip-path: inset(40% 0 58% 0); }
+    60% { clip-path: inset(60% 0 38% 0); }
+    80% { clip-path: inset(80% 0 18% 0); }
+}
+
+
+/* Subtítulo */
+.subtitle {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    animation: fadeIn 3s ease-in-out;
+}

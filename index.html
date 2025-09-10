@@ -3,130 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTDOL - Em Desenvolvimento</title>
-    <style>
-        /* Estilos gerais para o corpo da página */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            /* Fundo gradiente animado */
-            background: linear-gradient(45deg, #2c3e50, #34495e, #2c3e50, #4a6888);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-
-        /* Animação para o fundo gradiente */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Contêiner principal para o conteúdo */
-        .container {
-            max-width: 600px;
-            padding: 2rem;
-        }
-
-        /* Estilização e animação do logotipo */
-        .logo {
-            width: 150px;
-            margin-bottom: 2rem;
-            /* Animação de pulsação sutil */
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        /* Animação de pulsação para o logotipo */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Estilização do título principal (para o efeito de digitação) */
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            border-right: .15em solid orange; /* O cursor de digitação */
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-        }
-
-        /* Animações para o efeito de digitação e o cursor piscando */
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: orange; }
-        }
-
-        /* Estilização do parágrafo de descrição */
-        p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            opacity: 0;
-            /* Animação de fade-in para o texto */
-            animation: fadeIn 2s ease-in-out 3.5s forwards;
-        }
-
-        /* Animação de fade-in */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-    </style>
+    <title>CTDOL - Futuro Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    <canvas id="digital-rain"></canvas>
     <div class="container">
         <img src="ctdollogo.jpg" alt="Logo da CTDOL" class="logo">
-
-        <h1 id="main-title"></h1>
-
-        <p>Estamos trabalhando em uma nova e aprimorada solução web para a CTDOL. Fique atento para o lançamento em breve!</p>
+        <h1 class="glitch" data-text="EM CONSTRUÇÃO">EM CONSTRUÇÃO</h1>
+        <p class="subtitle">Nossa nova plataforma está sendo forjada no futuro.</p>
     </div>
-
-    <script>
-        // JavaScript para o efeito de digitação no título
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const titleElement = document.getElementById('main-title');
-            const textToType = "Em Desenvolvimento...";
-            let index = 0;
-
-            function typeWriter() {
-                if (index < textToType.length) {
-                    titleElement.innerHTML += textToType.charAt(index);
-                    index++;
-                    setTimeout(typeWriter, 80); // Velocidade da digitação em milissegundos
-                }
-            }
-
-            // Inicia o efeito de digitação quando a página carrega
-            typeWriter();
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
