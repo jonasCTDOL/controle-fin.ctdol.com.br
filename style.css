@@ -37,25 +37,34 @@ body {
     to { opacity: 1; transform: scale(1); }
 }
 
-/* Logo */
-.logo {
-    width: 150px;
+/* Animated Logo */
+.animated-logo {
+    display: flex;
+    gap: 10px;
     margin-bottom: 2rem;
-    animation: subtleGlow 3s infinite alternate ease-in-out;
-    transition: transform 0.2s ease;
+    height: 40px; /* Adjust as needed */
 }
 
-.logo:hover {
-    transform: scale(1.05);
-    animation-play-state: paused; /* Pausa o brilho para destacar o hover */
+.logo-char {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #00f0ff;
+    text-shadow: 0 0 8px #00f0ff, 0 0 15px #00f0ff;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: construct 0.5s forwards;
 }
 
-@keyframes subtleGlow {
-    from {
-        filter: drop-shadow(0 0 5px #00f0ff) drop-shadow(0 0 10px #00f0ff);
-    }
+.logo-char:nth-child(1) { animation-delay: 2.0s; }
+.logo-char:nth-child(2) { animation-delay: 2.2s; }
+.logo-char:nth-child(3) { animation-delay: 2.4s; }
+.logo-char:nth-child(4) { animation-delay: 2.6s; }
+.logo-char:nth-child(5) { animation-delay: 2.8s; }
+
+@keyframes construct {
     to {
-        filter: drop-shadow(0 0 15px #00f0ff) drop-shadow(0 0 25px #00f0ff);
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
