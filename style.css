@@ -137,6 +137,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     opacity: 1;
+    font-weight: 700;
     text-shadow: 0 0 5px rgba(0, 240, 255, 0.7);
     animation: fadeIn 3s ease-in-out;
 }
