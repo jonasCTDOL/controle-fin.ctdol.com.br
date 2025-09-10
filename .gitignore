@@ -1,0 +1,13 @@
+# Arquivos de dependências
+node_modules/
+
+# Arquivos de ambiente (geralmente contêm informações sensíveis)
+.env
+*.env.local
+
+# Arquivos de log
+*.log
+
+# Arquivos de sistema operacional e editores
+.DS_Store
+.vscode/
