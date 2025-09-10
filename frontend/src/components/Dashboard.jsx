@@ -10,6 +10,29 @@ function Dashboard() {
   const [expenseData, setExpenseData] = useState({ date: '', type: '', value: '' });
   const navigate = useNavigate();
 
+  // Helpers / cálculos do painel
+  const formatCurrency = (v) => {
+    const n = Number(v) || 0;
+    return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
+
+  const calcTotals = () => {
+    const totalIncome = incomes.reduce((s, i) => s + (Number(i.value) || 0), 0);
+    const totalExpense = expenses.reduce((s, ex) => s + (Number(ex.value) || 0), 0);
+    const balance = totalIncome - totalExpense;
+
+    const now = new Date();
+    const monthPrefix = now.toISOString().slice(0, 7); // 'YYYY-MM'
+    const monthIncome = incomes
+      .filter(i => i.date && i.date.startsWith(monthPrefix))
+      .reduce((s, i) => s + (Number(i.value) || 0), 0);
+    const monthExpense = expenses
+      .filter(e => e.date && e.date.startsWith(monthPrefix))
+      .reduce((s, e) => s + (Number(e.value) || 0), 0);
+
+    return { totalIncome, totalExpense, balance, monthIncome, monthExpense };
+  };
+
   useEffect(() => {
     if (!getToken()) {
       navigate('/login');
@@ -62,6 +85,38 @@ function Dashboard() {
         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4">Dashboard</Typography>
           <Button variant="outlined" color="secondary" onClick={handleLogout}>Logout</Button>
+        </Grid>
+
+        {/* Painel de controle / resumo */}
+        <Grid item xs={12} md={12}>
+          <Paper sx={{ p: 2, display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'space-between' }}>
+            {(() => {
+              const t = calcTotals();
+              return (
+                <Box sx={{ display: 'flex', gap: 4, alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+                  <Box>
+                    <Typography variant="subtitle2">Total Entradas</Typography>
+                    <Typography variant="h6">{formatCurrency(t.totalIncome)}</Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography variant="subtitle2">Total Despesas</Typography>
+                    <Typography variant="h6">{formatCurrency(t.totalExpense)}</Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography variant="subtitle2">Saldo</Typography>
+                    <Typography variant="h6" color={t.balance < 0 ? 'error.main' : 'success.main'}>{formatCurrency(t.balance)}</Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography variant="subtitle2">Mês (Entradas / Saídas)</Typography>
+                    <Typography variant="body1">{formatCurrency(t.monthIncome)} / {formatCurrency(t.monthExpense)}</Typography>
+                  </Box>
+                </Box>
+              );
+            })()}
+          </Paper>
         </Grid>
 
         <Grid item xs={12} md={6}>
