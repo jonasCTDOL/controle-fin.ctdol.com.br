@@ -1,0 +1,14 @@
+[Unit]
+Description=Uvicorn instance to serve controle-fin FastAPI app
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/home/ctdolc07/controle-fin.ctdol.com.br
+Environment="PATH=/home/ctdolc07/controle-fin.ctdol.com.br/backend/venv/bin"
+ExecStart=/home/ctdolc07/controle-fin.ctdol.com.br/backend/venv/bin/uvicorn backend.main:app --workers 4 --host 127.0.0.1 --port 8000
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
