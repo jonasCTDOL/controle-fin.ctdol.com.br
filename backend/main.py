@@ -5,6 +5,7 @@ import os
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -35,10 +36,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static frontend build (if exists)
+# Serve static frontend build (if exists). Mount under /static so API routes (POST etc.) are not intercepted.
 _dist_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'frontend', 'dist')
 if os.path.isdir(_dist_path):
-    app.mount("/", StaticFiles(directory=_dist_path, html=True), name="frontend")
+    app.mount("/static", StaticFiles(directory=_dist_path), name="frontend")
 
 # OAuth2PasswordBearer para lidar com o esquema de segurança OAuth2
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -78,9 +79,22 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 def read_root():
     """Endpoint raiz — se o build do frontend foi gerado, o StaticFiles já serve o index.html; caso contrário retorna status."""
     if os.path.isdir(_dist_path):
-        # Quando StaticFiles está montado em '/', ele já serve index.html automaticamente.
-        return {"status": "OK", "message": "Frontend está sendo servido pelo static mount."}
+        index_file = os.path.join(_dist_path, 'index.html')
+        if os.path.isfile(index_file):
+            return FileResponse(index_file)
+        return {"status": "OK", "message": "Frontend build encontrado, mas index.html ausente."}
     return {"status": "API Online", "message": "Bem-vindo à API de Controle Financeiro!"}
+
+
+# Catch-all to serve SPA routes (only for GET). This ensures client-side routing works.
+@app.get("/{full_path:path}")
+def spa_catchall(full_path: str):
+    if os.path.isdir(_dist_path):
+        index_file = os.path.join(_dist_path, 'index.html')
+        if os.path.isfile(index_file):
+            return FileResponse(index_file)
+    # If no frontend build, let FastAPI return 404 for unknown routes
+    raise HTTPException(status_code=404, detail="Not Found")
 
 @app.post("/users/register", response_model=schemas.User)
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)): # Changed
